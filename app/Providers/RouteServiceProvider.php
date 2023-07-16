@@ -29,12 +29,15 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            Route::prefix('v1/nasabah')
+                ->middleware(['api', 'JwtToken', 'NasabahAuth'])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/v1/nasabah/index.php'));
+            Route::prefix('v1/public')
+                ->middleware(['api'])
+                ->namespace($this->namespace)
+                ->group(base_path('routes/v1/public/index.php'));
         });
     }
 }
