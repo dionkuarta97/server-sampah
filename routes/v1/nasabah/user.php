@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\v1\nasabah\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('tabungan')->group(function () {
-  require(__DIR__ . '/tabungan.php');
-});
 
-
-Route::prefix('user')->group(function () {
-  require(__DIR__ . '/user.php');
-});
+Route::get('/', [UserController::class, 'getMe']);

@@ -31,6 +31,7 @@ class UserController extends Controller
                 'role.numeric' => 'role harus berupa angka'
 
             ]);
+
             if ($validation->fails()) return gagal($validation->errors(), 400);
 
 
@@ -82,6 +83,21 @@ class UserController extends Controller
             $access_token = JWT::encode($payload, $key, 'HS256');
 
             return sukses(['access_token' => $access_token, 'user' => $user], 200);
+        } catch (Exception $e) {
+            return gagal($e->getMessage(), 500);
+        }
+    }
+
+
+    public function getMe(Request $request)
+    {
+        try {
+            //code...
+            $user = $request->get('user');
+
+            $me = Users::with(['tabungan'])->find($user['id']);
+
+            return sukses($me, 200);
         } catch (Exception $e) {
             return gagal($e->getMessage(), 500);
         }
